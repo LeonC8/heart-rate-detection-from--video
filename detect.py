@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 import argparse
+import matplotlib.pyplot as plt
+import os
 
 def face_detection_and_crop(image):
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -58,8 +60,13 @@ def main():
     parser = argparse.ArgumentParser(description='Process video for face detection.')
     parser.add_argument('video_path', type=str, help='Path to the video file')
     parser.add_argument('--detect_face', action='store_true', help='Enable face detection')
+    parser.add_argument('--plot', action='store_true', help='Plot frequency spectrum')
 
     args = parser.parse_args()
+
+    if not os.path.exists(args.video_path):
+        print(f"Video nije pronađen")
+        exit()
 
     if args.detect_face:
         images, fps = detect_face(video_path=args.video_path)
@@ -82,6 +89,15 @@ def main():
 
     relative_freqs = freqs[low:high]
     print("Broj otkucaja srca: " + str(int(relative_freqs[np.argmax(fft_magnitudes[low:high])]* 60)) + "/min")
+
+    if args.plot:
+        plt.figure(figsize=(7, 7))
+        plt.plot(freqs[low:high], fft_magnitudes[low:high], color='green')
+        plt.title('Frekvencijski spektar videa')
+        plt.xlabel('Frekvencija (Hz)')
+        plt.ylabel('Magnituda')
+        plt.grid(True)
+        plt.show()
 
 if __name__ == "__main__":
     main()
