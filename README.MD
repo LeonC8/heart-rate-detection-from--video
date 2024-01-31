@@ -9,14 +9,14 @@ pip install -r requirements.txt
 ```
 
 # Korištenje
-Skript se pokreće iz komandne linije. Možete odabrati hoće li se izvršiti detekcija lica u videu.
-```bash
-python detect.py --detect_face "putanja/do/videa.mp4"
-```
-
-Ako ne želite da se izvrši detekcija lica, putanju videa jednostavno navedite bez dodatnih opcija:
+Skript se pokreće iz komandne linije.
 ```bash
 python detect.py "putanja/do/videa.mp4"
+```
+
+Ako želite da se izvrši detekcija lica (za većinu video primjera u "/data" to nije potrebno jer su unaprijed izrezani), postavite zastavicu --detect_face:
+```bash
+python detect.py --detect_face "putanja/do/videa.mp4"
 ```
 
 Također, ako želite da se prikaže frekvencijski spektar, može se postaviti zastavica --plot
